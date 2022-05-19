@@ -90,12 +90,12 @@ const listenPeriod = (plans) => {
     const input = document.querySelector('.period-checkbox');
     input.addEventListener('change', changeEvent => {
         const target = changeEvent.target;
-        const priceKey = !target.checked ? 'monthly': 'annual';
+        const priceKey = !target.checked ? 'monthly' : 'annual';
 
         const svgs = document.querySelectorAll('.pricing-row svg');
         Array.from(svgs).forEach((svg, index) => {
             const texts = svg.querySelectorAll('text');
-            texts[0].textContent = `$${ plans[index].price[priceKey] }`;
+            texts[0].textContent = `$${plans[index].price[priceKey]}`;
             if (priceKey === 'annual') {
                 texts[1].style.display = 'none';
                 texts[2].innerHTML = '&nbsp;/Year';
@@ -110,10 +110,17 @@ const listenPeriod = (plans) => {
 createCard('business-card');
 createCard('premium-card');
 setCardAttributes();
-updateServiceList('.standard-card', plans[0]);
-updateServiceList('.business-card', plans[1]);
-updateServiceList('.premium-card', plans[2]);
-listenPeriod(plans);
+// updateServiceList('.standard-card', plans[0]);
+// updateServiceList('.business-card', plans[1]);
+// updateServiceList('.premium-card', plans[2]);
+// listenPeriod(plans);
 
 // Fetch - olvassuk be az adatokat.
-console.log( JSON.stringify(plans) );
+fetch('https://raw.githubusercontent.com/Training360/JAVASCRIPT-alapok-dom-es6/main/json/plans.json')
+    .then(response => response.json())
+    .then(plans => {
+        updateServiceList('.standard-card', plans[0]);
+        updateServiceList('.business-card', plans[1]);
+        updateServiceList('.premium-card', plans[2]);
+        listenPeriod(plans);
+    });
