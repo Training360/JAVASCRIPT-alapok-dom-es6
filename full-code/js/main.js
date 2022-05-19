@@ -1,4 +1,4 @@
-import { 
+import {
     standardList,
     businessList,
     premiumList,
@@ -91,4 +91,28 @@ const updateServiceList = (selector, title, serviceList = [service]) => {
 updateServiceList('.standard-card', 'STANDARD', standardList);
 updateServiceList('.business-card', 'BUSINESS', businessList);
 updateServiceList('.premium-card', 'PREMIUM', premiumList);
+
+// DOM események.
+const listenPeriod = () => {
+    const values = [10, 20, 30];
+    const input = document.querySelector('.period-checkbox');
+    input.addEventListener('change', changeEvent => {
+        const target = changeEvent.target;
+        const multiplier = target.checked ? 10 : 1;
+        const svgs = document.querySelectorAll('.pricing-row svg');
+        Array.from(svgs).forEach((svg, index) => {
+            const texts = svg.querySelectorAll('text');
+            texts[0].textContent = `$${ values[index] * multiplier }`;
+            if (multiplier === 10) {
+                texts[1].style.display = 'none';
+                texts[2].innerHTML = '&nbsp;/Year';
+            } else {
+                texts[1].style.display = 'inherit';
+                texts[2].textContent = '/Month';
+            }
+        });
+    });
+};
+
+listenPeriod();
 
