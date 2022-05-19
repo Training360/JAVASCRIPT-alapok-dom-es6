@@ -1,23 +1,44 @@
-export const standardList = [
-    { value: '50GB', name: 'Disk Space' },
-    { value: '50', name: 'Email Accounts' },
-    { value: '50GB', name: 'Bandwidth' },
-    { value: '10', name: 'Subdomains' },
-    { value: '15', name: 'Domains' },
-];
-
-export const businessList = [
-    { value: '60GB', name: 'Disk Space' },
-    { value: '60', name: 'Email Accounts' },
-    { value: '60GB', name: 'Bandwidth' },
-    { value: '15', name: 'Subdomains' },
-    { value: '20', name: 'Domains' },
-];
-
-export const premiumList = [
-    { value: '70GB', name: 'Disk Space' },
-    { value: '70', name: 'Email Accounts' },
-    { value: '70GB', name: 'Bandwidth' },
-    { value: '20', name: 'Subdomains' },
-    { value: '25', name: 'Domains' },
+export const plans = [
+    {
+        name: 'STANDARD',
+        price: {
+            monthly: 10,
+            annual: 100,
+        },
+        services: [
+            { value: '50GB', name: 'Disk Space' },
+            { value: '50', name: 'Email Accounts' },
+            { value: '50GB', name: 'Bandwidth' },
+            { value: '10', name: 'Subdomains' },
+            { value: '15', name: 'Domains' },
+        ],
+    },
+    {
+        name: 'BUSINESS',
+        price: {
+            monthly: 20,
+            annual: 200,
+        },
+        services: [
+            { value: '60GB', name: 'Disk Space' },
+            { value: '60', name: 'Email Accounts' },
+            { value: '60GB', name: 'Bandwidth' },
+            { value: '15', name: 'Subdomains' },
+            { value: '20', name: 'Domains' },
+        ],
+    },
+    {
+        name: 'PREMIUM',
+        price: {
+            monthly: 30,
+            annual: 300,
+        },
+        services: [
+            { value: '70GB', name: 'Disk Space' },
+            { value: '70', name: 'Email Accounts' },
+            { value: '70GB', name: 'Bandwidth' },
+            { value: '20', name: 'Subdomains' },
+            { value: '25', name: 'Domains' },
+        ],
+    }
 ];

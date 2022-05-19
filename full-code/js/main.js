@@ -1,7 +1,5 @@
 import {
-    standardList,
-    businessList,
-    premiumList,
+    plans
 } from './services.js';
 
 // DOM elemek kiválasztása.
@@ -20,6 +18,8 @@ const getPriceCardData = () => {
         period,
     };
 };
+
+// console.log( getPriceCardData() );
 
 // DOM elemek létrehozása.
 const createCard = (className) => {
@@ -41,9 +41,6 @@ const createCard = (className) => {
     card.innerHTML = sourceHTML;
 };
 
-createCard('business-card');
-createCard('premium-card');
-
 // DOM attribútumok kezelése.
 const setCardAttributes = () => {
     let tables = document.querySelectorAll('.pricingTable');
@@ -61,20 +58,20 @@ const setCardAttributes = () => {
     tables[2].querySelector('.price-amount').textContent = '$30';
 };
 
-setCardAttributes();
-
 // DOM elemek tömeges módosítása.
 const service = { name: '', value: '' };
-const updateServiceList = (selector, title, serviceList = [service]) => {
+const updateServiceList = (selector, plan) => {
     const card = document.querySelector(selector);
-    const pricingContent = card.querySelector('.pricing-content');
 
-    pricingContent.querySelector('h3').textContent = title;
+    card.querySelector('svg text').textContent = `$${plan.price.monthly}`;
+
+    const pricingContent = card.querySelector('.pricing-content');
+    pricingContent.querySelector('h3').textContent = plan.name;
 
     const list = pricingContent.querySelector('ul.pricing-content');
     list.innerHTML = '';
 
-    serviceList.forEach(item => {
+    plan.services.forEach(item => {
         const listItem = document.createElement('li');
         list.appendChild(listItem);
 
@@ -82,28 +79,24 @@ const updateServiceList = (selector, title, serviceList = [service]) => {
         listItem.appendChild(itemValue);
         itemValue.textContent = item.value;
 
-        const itemName = document.createElement('b');
+        const itemName = document.createElement('span');
         listItem.appendChild(itemName);
-        itemName.textContent = item.name;
+        itemName.textContent = ' ' + item.name;
     });
 };
 
-updateServiceList('.standard-card', 'STANDARD', standardList);
-updateServiceList('.business-card', 'BUSINESS', businessList);
-updateServiceList('.premium-card', 'PREMIUM', premiumList);
-
 // DOM események.
-const listenPeriod = () => {
-    const values = [10, 20, 30];
+const listenPeriod = (plans) => {
     const input = document.querySelector('.period-checkbox');
     input.addEventListener('change', changeEvent => {
         const target = changeEvent.target;
-        const multiplier = target.checked ? 10 : 1;
+        const priceKey = !target.checked ? 'monthly': 'annual';
+
         const svgs = document.querySelectorAll('.pricing-row svg');
         Array.from(svgs).forEach((svg, index) => {
             const texts = svg.querySelectorAll('text');
-            texts[0].textContent = `$${ values[index] * multiplier }`;
-            if (multiplier === 10) {
+            texts[0].textContent = `$${ plans[index].price[priceKey] }`;
+            if (priceKey === 'annual') {
                 texts[1].style.display = 'none';
                 texts[2].innerHTML = '&nbsp;/Year';
             } else {
@@ -114,5 +107,13 @@ const listenPeriod = () => {
     });
 };
 
-listenPeriod();
+createCard('business-card');
+createCard('premium-card');
+setCardAttributes();
+updateServiceList('.standard-card', plans[0]);
+updateServiceList('.business-card', plans[1]);
+updateServiceList('.premium-card', plans[2]);
+listenPeriod(plans);
 
+// Fetch - olvassuk be az adatokat.
+console.log( JSON.stringify(plans) );
