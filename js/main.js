@@ -1,4 +1,6 @@
-
+import {
+    plans
+} from './services.js';
 
 // DOM elemek kiválasztása
 const getPriceCardData = () => {
@@ -51,6 +53,15 @@ const setCardAttributes = () => {
     tables[2].querySelector('.price-amount').textContent = '$30';
 };
 
+// DOM elemek tömeges módosítása
+const updateServiceList = (selector, plan) => {
+    const card = document.querySelector(selector);
+
+    card.querySelector('svg text').textContent = `$${plan.price.monthly}`;
+};
+
 createCard('business-card');
 createCard('premium-card');
 setCardAttributes();
+
+console.log( plans );
