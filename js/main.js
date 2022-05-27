@@ -17,4 +17,22 @@ const getPriceCardData = () => {
     };
 };
 
-console.log( getPriceCardData() );
+// console.log( getPriceCardData() );
+
+// DOM elemek létrehozása
+const createCard = (className) => {
+    const row = document.querySelector('.pricing-row');
+
+    // <div class="col-md-4 col-sm-6"></div>
+    const card = document.createElement('div');
+    card.className = 'col-md-4 col-sm-6';
+    row.appendChild(card);
+
+    const template = row.querySelector('div.col-sm-6');
+    const sourceHTML = template.innerHTML;
+
+    card.innerHTML = sourceHTML;
+};
+
+createCard('business-card');
+createCard('premium-card');
