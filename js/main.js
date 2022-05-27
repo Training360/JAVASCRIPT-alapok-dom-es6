@@ -34,5 +34,23 @@ const createCard = (className) => {
     card.innerHTML = sourceHTML;
 };
 
+// DOM attribútumok
+const setCardAttributes = () => {
+    const tables = document.querySelectorAll('.pricingTable');
+
+    // Class
+    tables[1].classList.add('blue');
+    tables[2].classList.add('red');
+
+    // Fill
+    tables[1].querySelector('svg path').setAttribute('fill', '#005c99');
+    tables[2].querySelector('svg path').setAttribute('fill', '#db2c29');
+
+    // Price
+    tables[1].querySelector('.price-amount').textContent = '$20';
+    tables[2].querySelector('.price-amount').textContent = '$30';
+};
+
 createCard('business-card');
 createCard('premium-card');
+setCardAttributes();
