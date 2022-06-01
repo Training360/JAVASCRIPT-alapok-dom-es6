@@ -84,7 +84,22 @@ const updateServiceList = (selector, plan) => {
 const listenPeriod = (plans) => {
     const input = document.querySelector('.period-checkbox');
     input.addEventListener('change', changeEvent => {
-        console.log(changeEvent);
+        const target = changeEvent.target;
+        const priceKey = !target.checked ? 'monthly' : 'annual';
+
+        const svgs = document.querySelectorAll('.pricing-row svg');
+        Array.from(svgs).forEach((svg, index) => {
+            const texts = svg.querySelectorAll('text');
+            texts[0].textContent = `$${plans[index].price[priceKey]}`;
+            if (priceKey === 'annual') {
+                texts[1].style.display = 'none';
+                texts[2].innerHTML = '&nbsp;/Year';
+            } else {
+                texts[1].style.display = 'inherit';
+                texts[2].innerHTML = '/Month';
+            }
+        });
+
     });
 };
 
