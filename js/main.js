@@ -27,7 +27,7 @@ const createCard = (className) => {
 
     // <div class="col-md-4 col-sm-6"></div>
     const card = document.createElement('div');
-    card.className = 'col-md-4 col-sm-6';
+    card.className = `col-md-4 col-sm-6 ${className}`;
     row.appendChild(card);
 
     const template = row.querySelector('div.col-sm-6');
@@ -41,6 +41,7 @@ const setCardAttributes = () => {
     const tables = document.querySelectorAll('.pricingTable');
 
     // Class
+    tables[0].classList.add('standard-card');
     tables[1].classList.add('blue');
     tables[2].classList.add('red');
 
@@ -58,10 +59,33 @@ const updateServiceList = (selector, plan) => {
     const card = document.querySelector(selector);
 
     card.querySelector('svg text').textContent = `$${plan.price.monthly}`;
+
+    const pricingContent = card.querySelector('.pricing-content');
+    pricingContent.querySelector('h3').textContent = plan.name;
+
+    const list = pricingContent.querySelector('ul.pricing-content');
+    list.innerHTML = '';
+
+    plan.services.forEach( item => {
+        const listItem = document.createElement('li');
+        list.appendChild(listItem);
+
+        const itemValue = document.createElement('b');
+        listItem.appendChild(itemValue);
+        itemValue.textContent = item.value;
+
+        const itemName = document.createElement('span');
+        listItem.appendChild(itemName);
+        itemName.textContent = ' ' + item.name;
+    });
 };
 
 createCard('business-card');
 createCard('premium-card');
 setCardAttributes();
+
+updateServiceList('.standard-card', plans[0]);
+updateServiceList('.business-card', plans[1]);
+updateServiceList('.premium-card', plans[2]);
 
 console.log( plans );
