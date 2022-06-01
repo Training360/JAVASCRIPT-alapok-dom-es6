@@ -66,7 +66,7 @@ const updateServiceList = (selector, plan) => {
     const list = pricingContent.querySelector('ul.pricing-content');
     list.innerHTML = '';
 
-    plan.services.forEach( item => {
+    plan.services.forEach(item => {
         const listItem = document.createElement('li');
         list.appendChild(listItem);
 
@@ -107,10 +107,19 @@ createCard('business-card');
 createCard('premium-card');
 setCardAttributes();
 
-updateServiceList('.standard-card', plans[0]);
-updateServiceList('.business-card', plans[1]);
-updateServiceList('.premium-card', plans[2]);
+// updateServiceList('.standard-card', plans[0]);
+// updateServiceList('.business-card', plans[1]);
+// updateServiceList('.premium-card', plans[2]);
 
-listenPeriod(plans);
+// listenPeriod(plans);
 
-console.log( plans );
+// Fetch
+fetch('https://raw.githubusercontent.com/Training360/JAVASCRIPT-alapok-dom-es6/main/json/plans.json')
+    .then(response => response.json())
+    .then(plans => {
+        updateServiceList('.standard-card', plans[0]);
+        updateServiceList('.business-card', plans[1]);
+        updateServiceList('.premium-card', plans[2]);
+
+        listenPeriod(plans);
+    });
