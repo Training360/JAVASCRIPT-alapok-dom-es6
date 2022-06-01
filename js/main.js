@@ -80,6 +80,14 @@ const updateServiceList = (selector, plan) => {
     });
 };
 
+// DOM események
+const listenPeriod = (plans) => {
+    const input = document.querySelector('.period-checkbox');
+    input.addEventListener('change', changeEvent => {
+        console.log(changeEvent);
+    });
+};
+
 createCard('business-card');
 createCard('premium-card');
 setCardAttributes();
@@ -87,5 +95,7 @@ setCardAttributes();
 updateServiceList('.standard-card', plans[0]);
 updateServiceList('.business-card', plans[1]);
 updateServiceList('.premium-card', plans[2]);
+
+listenPeriod(plans);
 
 console.log( plans );
